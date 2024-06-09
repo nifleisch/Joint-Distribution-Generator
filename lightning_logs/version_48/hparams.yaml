@@ -1,0 +1,735 @@
+batch_size: 16
+covariance: !!python/object/apply:torch._utils._rebuild_tensor_v2
+- !!python/object/apply:torch.storage._load_from_bytes
+  - !!binary |
+    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+    Z2UKcQFYCgAAADU4Nzk1OTU4NDBxAlgDAAAAY3B1cQNLMU50cQRRLoACXXEAWAoAAAA1ODc5NTk1
+    ODQwcQFhLjEAAAAAAAAAAQCAPyeDHz/Rojs/LMxsP9kNCD+LlyA/CodNPyeDHz8AAIA/ROBVPwiV
+    Uz+o0l4/2Lc+P8SaUz/Sojs/ROBVPwAAgD8LW2I/obtNP4uMKj/8Wlo/LMxsPweVUz8LW2I/AACA
+    P/uzOz+RdUw/MG9XP9kNCD+p0l4/ortNP/yzOz///38/fIZRP9FUSz+LlyA/17c+P4qMKj+SdUw/
+    fYZRPwAAgD91wA0/C4dNP8WaUz/8Wlo/MG9XP9FUSz91wA0///9/Pw==
+- 0
+- !!python/tuple
+  - 7
+  - 7
+- !!python/tuple
+  - 7
+  - 1
+- false
+- !!python/object/apply:collections.OrderedDict
+  - []
+d_latents: 14
+distributions:
+- !!python/object:scipy.stats._distn_infrastructure.rv_continuous_frozen
+  a: -.inf
+  args: !!python/tuple []
+  b: .inf
+  dist: !!python/object:scipy.stats._continuous_distns.norm_gen
+    __doc__: "A normal continuous random variable.\n\n    The location (``loc``) keyword\
+      \ specifies the mean.\n    The scale (``scale``) keyword specifies the standard\
+      \ deviation.\n\n    As an instance of the `rv_continuous` class, `norm` object\
+      \ inherits from it\n    a collection of generic methods (see below for the full\
+      \ list),\n    and completes them with details specific for this particular distribution.\n\
+      \    \n    Methods\n    -------\n    rvs(loc=0, scale=1, size=1, random_state=None)\n\
+      \        Random variates.\n    pdf(x, loc=0, scale=1)\n        Probability density\
+      \ function.\n    logpdf(x, loc=0, scale=1)\n        Log of the probability density\
+      \ function.\n    cdf(x, loc=0, scale=1)\n        Cumulative distribution function.\n\
+      \    logcdf(x, loc=0, scale=1)\n        Log of the cumulative distribution function.\n\
+      \    sf(x, loc=0, scale=1)\n        Survival function  (also defined as ``1\
+      \ - cdf``, but `sf` is sometimes more accurate).\n    logsf(x, loc=0, scale=1)\n\
+      \        Log of the survival function.\n    ppf(q, loc=0, scale=1)\n       \
+      \ Percent point function (inverse of ``cdf`` --- percentiles).\n    isf(q, loc=0,\
+      \ scale=1)\n        Inverse survival function (inverse of ``sf``).\n    moment(order,\
+      \ loc=0, scale=1)\n        Non-central moment of the specified order.\n    stats(loc=0,\
+      \ scale=1, moments='mv')\n        Mean('m'), variance('v'), skew('s'), and/or\
+      \ kurtosis('k').\n    entropy(loc=0, scale=1)\n        (Differential) entropy\
+      \ of the RV.\n    fit(data)\n        Parameter estimates for generic data.\n\
+      \        See `scipy.stats.rv_continuous.fit <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.fit.html#scipy.stats.rv_continuous.fit>`__\
+      \ for detailed documentation of the\n        keyword arguments.\n    expect(func,\
+      \ args=(), loc=0, scale=1, lb=None, ub=None, conditional=False, **kwds)\n  \
+      \      Expected value of a function (of one argument) with respect to the distribution.\n\
+      \    median(loc=0, scale=1)\n        Median of the distribution.\n    mean(loc=0,\
+      \ scale=1)\n        Mean of the distribution.\n    var(loc=0, scale=1)\n   \
+      \     Variance of the distribution.\n    std(loc=0, scale=1)\n        Standard\
+      \ deviation of the distribution.\n    interval(confidence, loc=0, scale=1)\n\
+      \        Confidence interval with equal areas around the median.\n\n    Notes\n\
+      \    -----\n    The probability density function for `norm` is:\n\n    .. math::\n\
+      \n        f(x) = \\frac{\\exp(-x^2/2)}{\\sqrt{2\\pi}}\n\n    for a real number\
+      \ :math:`x`.\n\n    The probability density above is defined in the \"standardized\"\
+      \ form. To shift\n    and/or scale the distribution use the ``loc`` and ``scale``\
+      \ parameters.\n    Specifically, ``norm.pdf(x, loc, scale)`` is identically\n\
+      \    equivalent to ``norm.pdf(y) / scale`` with\n    ``y = (x - loc) / scale``.\
+      \ Note that shifting the location of a distribution\n    does not make it a\
+      \ \"noncentral\" distribution; noncentral generalizations of\n    some distributions\
+      \ are available in separate classes.\n\n    Examples\n    --------\n    >>>\
+      \ import numpy as np\n    >>> from scipy.stats import norm\n    >>> import matplotlib.pyplot\
+      \ as plt\n    >>> fig, ax = plt.subplots(1, 1)\n    \n    Calculate the first\
+      \ four moments:\n    \n    \n    >>> mean, var, skew, kurt = norm.stats(moments='mvsk')\n\
+      \    \n    Display the probability density function (``pdf``):\n    \n    >>>\
+      \ x = np.linspace(norm.ppf(0.01),\n    ...                 norm.ppf(0.99), 100)\n\
+      \    >>> ax.plot(x, norm.pdf(x),\n    ...        'r-', lw=5, alpha=0.6, label='norm\
+      \ pdf')\n    \n    Alternatively, the distribution object can be called (as\
+      \ a function)\n    to fix the shape, location and scale parameters. This returns\
+      \ a \"frozen\"\n    RV object holding the given parameters fixed.\n    \n  \
+      \  Freeze the distribution and display the frozen ``pdf``:\n    \n    >>> rv\
+      \ = norm()\n    >>> ax.plot(x, rv.pdf(x), 'k-', lw=2, label='frozen pdf')\n\
+      \    \n    Check accuracy of ``cdf`` and ``ppf``:\n    \n    >>> vals = norm.ppf([0.001,\
+      \ 0.5, 0.999])\n    >>> np.allclose([0.001, 0.5, 0.999], norm.cdf(vals))\n \
+      \   True\n    \n    Generate random numbers:\n    \n    >>> r = norm.rvs(size=1000)\n\
+      \    \n    And compare the histogram:\n    \n    >>> ax.hist(r, density=True,\
+      \ bins='auto', histtype='stepfilled', alpha=0.2)\n    >>> ax.set_xlim([x[0],\
+      \ x[-1]])\n    >>> ax.legend(loc='best', frameon=False)\n    >>> plt.show()\n\
+      \    \n\n    "
+    _ctor_param:
+      a: -.inf
+      b: .inf
+      badvalue: .nan
+      longname: null
+      momtype: 1
+      name: norm
+      seed: null
+      shapes: null
+      xtol: 1.0e-14
+    _parse_arg_template: "\ndef _parse_args(self,  loc=0, scale=1):\n    return (),\
+      \ loc, scale\n\ndef _parse_args_rvs(self,  loc=0, scale=1, size=None):\n   \
+      \ return self._argcheck_rvs( loc, scale, size=size)\n\ndef _parse_args_stats(self,\
+      \  loc=0, scale=1, moments='mv'):\n    return (), loc, scale, moments\n"
+    _random_state: &id001 !!python/object/apply:numpy.random._pickle.__randomstate_ctor
+      args:
+      - MT19937
+      - !!python/name:numpy.random._pickle.__bit_generator_ctor ''
+      state:
+        bit_generator: MT19937
+        gauss: 0.0
+        has_gauss: 0
+        state:
+          key: !!python/object/apply:numpy.core.multiarray._reconstruct
+            args:
+            - !!python/name:numpy.ndarray ''
+            - !!python/tuple
+              - 0
+            - !!binary |
+              Yg==
+            state: !!python/tuple
+            - 1
+            - !!python/tuple
+              - 624
+            - !!python/object/apply:numpy.dtype
+              args:
+              - u4
+              - false
+              - true
+              state: !!python/tuple
+              - 3
+              - <
+              - null
+              - null
+              - null
+              - -1
+              - -1
+              - 0
+            - false
+            - !!binary |
+              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
+          pos: 623
+    _stats_has_moments: false
+    a: -.inf
+    b: .inf
+    badvalue: .nan
+    moment_type: 1
+    name: norm
+    numargs: 0
+    shapes: null
+    xtol: 1.0e-14
+  kwds:
+    loc: -3
+    scale: 1.7
+- !!python/object:scipy.stats._distn_infrastructure.rv_continuous_frozen
+  a: 0.0
+  args: !!python/tuple []
+  b: 1.0
+  dist: !!python/object:scipy.stats._continuous_distns.uniform_gen
+    __doc__: "A uniform continuous random variable.\n\n    In the standard form, the\
+      \ distribution is uniform on ``[0, 1]``. Using\n    the parameters ``loc`` and\
+      \ ``scale``, one obtains the uniform distribution\n    on ``[loc, loc + scale]``.\n\
+      \n    As an instance of the `rv_continuous` class, `uniform` object inherits\
+      \ from it\n    a collection of generic methods (see below for the full list),\n\
+      \    and completes them with details specific for this particular distribution.\n\
+      \    \n    Methods\n    -------\n    rvs(loc=0, scale=1, size=1, random_state=None)\n\
+      \        Random variates.\n    pdf(x, loc=0, scale=1)\n        Probability density\
+      \ function.\n    logpdf(x, loc=0, scale=1)\n        Log of the probability density\
+      \ function.\n    cdf(x, loc=0, scale=1)\n        Cumulative distribution function.\n\
+      \    logcdf(x, loc=0, scale=1)\n        Log of the cumulative distribution function.\n\
+      \    sf(x, loc=0, scale=1)\n        Survival function  (also defined as ``1\
+      \ - cdf``, but `sf` is sometimes more accurate).\n    logsf(x, loc=0, scale=1)\n\
+      \        Log of the survival function.\n    ppf(q, loc=0, scale=1)\n       \
+      \ Percent point function (inverse of ``cdf`` --- percentiles).\n    isf(q, loc=0,\
+      \ scale=1)\n        Inverse survival function (inverse of ``sf``).\n    moment(order,\
+      \ loc=0, scale=1)\n        Non-central moment of the specified order.\n    stats(loc=0,\
+      \ scale=1, moments='mv')\n        Mean('m'), variance('v'), skew('s'), and/or\
+      \ kurtosis('k').\n    entropy(loc=0, scale=1)\n        (Differential) entropy\
+      \ of the RV.\n    fit(data)\n        Parameter estimates for generic data.\n\
+      \        See `scipy.stats.rv_continuous.fit <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.fit.html#scipy.stats.rv_continuous.fit>`__\
+      \ for detailed documentation of the\n        keyword arguments.\n    expect(func,\
+      \ args=(), loc=0, scale=1, lb=None, ub=None, conditional=False, **kwds)\n  \
+      \      Expected value of a function (of one argument) with respect to the distribution.\n\
+      \    median(loc=0, scale=1)\n        Median of the distribution.\n    mean(loc=0,\
+      \ scale=1)\n        Mean of the distribution.\n    var(loc=0, scale=1)\n   \
+      \     Variance of the distribution.\n    std(loc=0, scale=1)\n        Standard\
+      \ deviation of the distribution.\n    interval(confidence, loc=0, scale=1)\n\
+      \        Confidence interval with equal areas around the median.\n\n    Examples\n\
+      \    --------\n    >>> import numpy as np\n    >>> from scipy.stats import uniform\n\
+      \    >>> import matplotlib.pyplot as plt\n    >>> fig, ax = plt.subplots(1,\
+      \ 1)\n    \n    Calculate the first four moments:\n    \n    \n    >>> mean,\
+      \ var, skew, kurt = uniform.stats(moments='mvsk')\n    \n    Display the probability\
+      \ density function (``pdf``):\n    \n    >>> x = np.linspace(uniform.ppf(0.01),\n\
+      \    ...                 uniform.ppf(0.99), 100)\n    >>> ax.plot(x, uniform.pdf(x),\n\
+      \    ...        'r-', lw=5, alpha=0.6, label='uniform pdf')\n    \n    Alternatively,\
+      \ the distribution object can be called (as a function)\n    to fix the shape,\
+      \ location and scale parameters. This returns a \"frozen\"\n    RV object holding\
+      \ the given parameters fixed.\n    \n    Freeze the distribution and display\
+      \ the frozen ``pdf``:\n    \n    >>> rv = uniform()\n    >>> ax.plot(x, rv.pdf(x),\
+      \ 'k-', lw=2, label='frozen pdf')\n    \n    Check accuracy of ``cdf`` and ``ppf``:\n\
+      \    \n    >>> vals = uniform.ppf([0.001, 0.5, 0.999])\n    >>> np.allclose([0.001,\
+      \ 0.5, 0.999], uniform.cdf(vals))\n    True\n    \n    Generate random numbers:\n\
+      \    \n    >>> r = uniform.rvs(size=1000)\n    \n    And compare the histogram:\n\
+      \    \n    >>> ax.hist(r, density=True, bins='auto', histtype='stepfilled',\
+      \ alpha=0.2)\n    >>> ax.set_xlim([x[0], x[-1]])\n    >>> ax.legend(loc='best',\
+      \ frameon=False)\n    >>> plt.show()\n    \n\n    "
+    _ctor_param:
+      a: 0.0
+      b: 1.0
+      badvalue: .nan
+      longname: null
+      momtype: 1
+      name: uniform
+      seed: null
+      shapes: null
+      xtol: 1.0e-14
+    _parse_arg_template: "\ndef _parse_args(self,  loc=0, scale=1):\n    return (),\
+      \ loc, scale\n\ndef _parse_args_rvs(self,  loc=0, scale=1, size=None):\n   \
+      \ return self._argcheck_rvs( loc, scale, size=size)\n\ndef _parse_args_stats(self,\
+      \  loc=0, scale=1, moments='mv'):\n    return (), loc, scale, moments\n"
+    _random_state: *id001
+    _stats_has_moments: false
+    a: 0.0
+    b: 1.0
+    badvalue: .nan
+    moment_type: 1
+    name: uniform
+    numargs: 0
+    shapes: null
+    xtol: 1.0e-14
+  kwds:
+    loc: 5.3
+    scale: 10.7
+- !!python/object:scipy.stats._distn_infrastructure.rv_discrete_frozen
+  a: 0
+  args: !!python/tuple []
+  b: 1
+  dist: &id002 !!python/object:scipy.stats._discrete_distns.bernoulli_gen
+    __doc__: "A Bernoulli discrete random variable.\n\n    As an instance of the `rv_discrete`\
+      \ class, `bernoulli` object inherits from it\n    a collection of generic methods\
+      \ (see below for the full list),\n    and completes them with details specific\
+      \ for this particular distribution.\n    \n    Methods\n    -------\n    rvs(p,\
+      \ loc=0, size=1, random_state=None)\n        Random variates.\n    pmf(k, p,\
+      \ loc=0)\n        Probability mass function.\n    logpmf(k, p, loc=0)\n    \
+      \    Log of the probability mass function.\n    cdf(k, p, loc=0)\n        Cumulative\
+      \ distribution function.\n    logcdf(k, p, loc=0)\n        Log of the cumulative\
+      \ distribution function.\n    sf(k, p, loc=0)\n        Survival function  (also\
+      \ defined as ``1 - cdf``, but `sf` is sometimes more accurate).\n    logsf(k,\
+      \ p, loc=0)\n        Log of the survival function.\n    ppf(q, p, loc=0)\n \
+      \       Percent point function (inverse of ``cdf`` --- percentiles).\n    isf(q,\
+      \ p, loc=0)\n        Inverse survival function (inverse of ``sf``).\n    stats(p,\
+      \ loc=0, moments='mv')\n        Mean('m'), variance('v'), skew('s'), and/or\
+      \ kurtosis('k').\n    entropy(p, loc=0)\n        (Differential) entropy of the\
+      \ RV.\n    expect(func, args=(p,), loc=0, lb=None, ub=None, conditional=False)\n\
+      \        Expected value of a function (of one argument) with respect to the\
+      \ distribution.\n    median(p, loc=0)\n        Median of the distribution.\n\
+      \    mean(p, loc=0)\n        Mean of the distribution.\n    var(p, loc=0)\n\
+      \        Variance of the distribution.\n    std(p, loc=0)\n        Standard\
+      \ deviation of the distribution.\n    interval(confidence, p, loc=0)\n     \
+      \   Confidence interval with equal areas around the median.\n\n    Notes\n \
+      \   -----\n    The probability mass function for `bernoulli` is:\n\n    .. math::\n\
+      \n       f(k) = \\begin{cases}1-p  &\\text{if } k = 0\\\\\n                \
+      \           p    &\\text{if } k = 1\\end{cases}\n\n    for :math:`k` in :math:`\\\
+      {0, 1\\}`, :math:`0 \\leq p \\leq 1`\n\n    `bernoulli` takes :math:`p` as shape\
+      \ parameter,\n    where :math:`p` is the probability of a single success\n \
+      \   and :math:`1-p` is the probability of a single failure.\n\n    The probability\
+      \ mass function above is defined in the \"standardized\" form.\n    To shift\
+      \ distribution use the ``loc`` parameter.\n    Specifically, ``bernoulli.pmf(k,\
+      \ p, loc)`` is identically\n    equivalent to ``bernoulli.pmf(k - loc, p)``.\n\
+      \n    Examples\n    --------\n    >>> import numpy as np\n    >>> from scipy.stats\
+      \ import bernoulli\n    >>> import matplotlib.pyplot as plt\n    >>> fig, ax\
+      \ = plt.subplots(1, 1)\n    \n    Calculate the first four moments:\n    \n\
+      \    >>> p = 0.3\n    >>> mean, var, skew, kurt = bernoulli.stats(p, moments='mvsk')\n\
+      \    \n    Display the probability mass function (``pmf``):\n    \n    >>> x\
+      \ = np.arange(bernoulli.ppf(0.01, p),\n    ...               bernoulli.ppf(0.99,\
+      \ p))\n    >>> ax.plot(x, bernoulli.pmf(x, p), 'bo', ms=8, label='bernoulli\
+      \ pmf')\n    >>> ax.vlines(x, 0, bernoulli.pmf(x, p), colors='b', lw=5, alpha=0.5)\n\
+      \    \n    Alternatively, the distribution object can be called (as a function)\n\
+      \    to fix the shape and location. This returns a \"frozen\" RV object holding\n\
+      \    the given parameters fixed.\n    \n    Freeze the distribution and display\
+      \ the frozen ``pmf``:\n    \n    >>> rv = bernoulli(p)\n    >>> ax.vlines(x,\
+      \ 0, rv.pmf(x), colors='k', linestyles='-', lw=1,\n    ...         label='frozen\
+      \ pmf')\n    >>> ax.legend(loc='best', frameon=False)\n    >>> plt.show()\n\
+      \    \n    Check accuracy of ``cdf`` and ``ppf``:\n    \n    >>> prob = bernoulli.cdf(x,\
+      \ p)\n    >>> np.allclose(x, bernoulli.ppf(prob, p))\n    True\n    \n    Generate\
+      \ random numbers:\n    \n    >>> r = bernoulli.rvs(p, size=1000)\n\n    "
+    _ctor_param:
+      a: 0
+      b: 1
+      badvalue: .nan
+      inc: 1
+      longname: null
+      moment_tol: 1.0e-08
+      name: bernoulli
+      seed: null
+      shapes: p
+      values: null
+    _parse_arg_template: "\ndef _parse_args(self, p,  loc=0):\n    return (p, ), loc,\
+      \ 1\n\ndef _parse_args_rvs(self, p,  loc=0, size=None):\n    return self._argcheck_rvs(p,\
+      \  loc, 1, size=size)\n\ndef _parse_args_stats(self, p,  loc=0, moments='mv'):\n\
+      \    return (p, ), loc, 1, moments\n"
+    _random_state: *id001
+    _stats_has_moments: false
+    a: 0
+    b: 1
+    badvalue: .nan
+    inc: 1
+    moment_tol: 1.0e-08
+    name: bernoulli
+    numargs: 1
+    shapes: p
+    vecentropy: !!python/object:numpy.vectorize
+      __doc__: null
+      __name__: _entropy
+      _doc: null
+      _in_and_out_core_dims: null
+      _ufunc: {}
+      cache: false
+      excluded: !!set {}
+      otypes: null
+      pyfunc: !!python/object/apply:builtins.getattr
+      - *id002
+      - _entropy
+      signature: null
+  kwds:
+    p: 0.314
+- !!python/object:scipy.stats._distn_infrastructure.rv_discrete_frozen
+  a: 0
+  args: !!python/tuple []
+  b: 10
+  dist: &id003 !!python/object:scipy.stats._discrete_distns.binom_gen
+    __doc__: "A binomial discrete random variable.\n\n    As an instance of the `rv_discrete`\
+      \ class, `binom` object inherits from it\n    a collection of generic methods\
+      \ (see below for the full list),\n    and completes them with details specific\
+      \ for this particular distribution.\n    \n    Methods\n    -------\n    rvs(n,\
+      \ p, loc=0, size=1, random_state=None)\n        Random variates.\n    pmf(k,\
+      \ n, p, loc=0)\n        Probability mass function.\n    logpmf(k, n, p, loc=0)\n\
+      \        Log of the probability mass function.\n    cdf(k, n, p, loc=0)\n  \
+      \      Cumulative distribution function.\n    logcdf(k, n, p, loc=0)\n     \
+      \   Log of the cumulative distribution function.\n    sf(k, n, p, loc=0)\n \
+      \       Survival function  (also defined as ``1 - cdf``, but `sf` is sometimes\
+      \ more accurate).\n    logsf(k, n, p, loc=0)\n        Log of the survival function.\n\
+      \    ppf(q, n, p, loc=0)\n        Percent point function (inverse of ``cdf``\
+      \ --- percentiles).\n    isf(q, n, p, loc=0)\n        Inverse survival function\
+      \ (inverse of ``sf``).\n    stats(n, p, loc=0, moments='mv')\n        Mean('m'),\
+      \ variance('v'), skew('s'), and/or kurtosis('k').\n    entropy(n, p, loc=0)\n\
+      \        (Differential) entropy of the RV.\n    expect(func, args=(n, p), loc=0,\
+      \ lb=None, ub=None, conditional=False)\n        Expected value of a function\
+      \ (of one argument) with respect to the distribution.\n    median(n, p, loc=0)\n\
+      \        Median of the distribution.\n    mean(n, p, loc=0)\n        Mean of\
+      \ the distribution.\n    var(n, p, loc=0)\n        Variance of the distribution.\n\
+      \    std(n, p, loc=0)\n        Standard deviation of the distribution.\n   \
+      \ interval(confidence, n, p, loc=0)\n        Confidence interval with equal\
+      \ areas around the median.\n\n    Notes\n    -----\n    The probability mass\
+      \ function for `binom` is:\n\n    .. math::\n\n       f(k) = \\binom{n}{k} p^k\
+      \ (1-p)^{n-k}\n\n    for :math:`k \\in \\{0, 1, \\dots, n\\}`, :math:`0 \\leq\
+      \ p \\leq 1`\n\n    `binom` takes :math:`n` and :math:`p` as shape parameters,\n\
+      \    where :math:`p` is the probability of a single success\n    and :math:`1-p`\
+      \ is the probability of a single failure.\n\n    The probability mass function\
+      \ above is defined in the \"standardized\" form.\n    To shift distribution\
+      \ use the ``loc`` parameter.\n    Specifically, ``binom.pmf(k, n, p, loc)``\
+      \ is identically\n    equivalent to ``binom.pmf(k - loc, n, p)``.\n\n    Examples\n\
+      \    --------\n    >>> import numpy as np\n    >>> from scipy.stats import binom\n\
+      \    >>> import matplotlib.pyplot as plt\n    >>> fig, ax = plt.subplots(1,\
+      \ 1)\n    \n    Calculate the first four moments:\n    \n    >>> n, p = 5, 0.4\n\
+      \    >>> mean, var, skew, kurt = binom.stats(n, p, moments='mvsk')\n    \n \
+      \   Display the probability mass function (``pmf``):\n    \n    >>> x = np.arange(binom.ppf(0.01,\
+      \ n, p),\n    ...               binom.ppf(0.99, n, p))\n    >>> ax.plot(x, binom.pmf(x,\
+      \ n, p), 'bo', ms=8, label='binom pmf')\n    >>> ax.vlines(x, 0, binom.pmf(x,\
+      \ n, p), colors='b', lw=5, alpha=0.5)\n    \n    Alternatively, the distribution\
+      \ object can be called (as a function)\n    to fix the shape and location. This\
+      \ returns a \"frozen\" RV object holding\n    the given parameters fixed.\n\
+      \    \n    Freeze the distribution and display the frozen ``pmf``:\n    \n \
+      \   >>> rv = binom(n, p)\n    >>> ax.vlines(x, 0, rv.pmf(x), colors='k', linestyles='-',\
+      \ lw=1,\n    ...         label='frozen pmf')\n    >>> ax.legend(loc='best',\
+      \ frameon=False)\n    >>> plt.show()\n    \n    Check accuracy of ``cdf`` and\
+      \ ``ppf``:\n    \n    >>> prob = binom.cdf(x, n, p)\n    >>> np.allclose(x,\
+      \ binom.ppf(prob, n, p))\n    True\n    \n    Generate random numbers:\n   \
+      \ \n    >>> r = binom.rvs(n, p, size=1000)\n\n    See Also\n    --------\n \
+      \   hypergeom, nbinom, nhypergeom\n\n    "
+    _ctor_param:
+      a: 0
+      b: .inf
+      badvalue: .nan
+      inc: 1
+      longname: null
+      moment_tol: 1.0e-08
+      name: binom
+      seed: null
+      shapes: n, p
+      values: null
+    _parse_arg_template: "\ndef _parse_args(self, n, p,  loc=0):\n    return (n, p,\
+      \ ), loc, 1\n\ndef _parse_args_rvs(self, n, p,  loc=0, size=None):\n    return\
+      \ self._argcheck_rvs(n, p,  loc, 1, size=size)\n\ndef _parse_args_stats(self,\
+      \ n, p,  loc=0, moments='mv'):\n    return (n, p, ), loc, 1, moments\n"
+    _random_state: *id001
+    _stats_has_moments: true
+    a: 0
+    b: .inf
+    badvalue: .nan
+    inc: 1
+    moment_tol: 1.0e-08
+    name: binom
+    numargs: 2
+    shapes: n, p
+    vecentropy: !!python/object:numpy.vectorize
+      __doc__: null
+      __name__: _entropy
+      _doc: null
+      _in_and_out_core_dims: null
+      _ufunc: {}
+      cache: false
+      excluded: !!set {}
+      otypes: null
+      pyfunc: !!python/object/apply:builtins.getattr
+      - *id003
+      - _entropy
+      signature: null
+  kwds:
+    n: 10
+    p: 0.42
+- !!python/object:scipy.stats._distn_infrastructure.rv_discrete_frozen
+  a: 0
+  args: !!python/tuple []
+  b: .inf
+  dist: &id004 !!python/object:scipy.stats._discrete_distns.poisson_gen
+    __doc__: "A Poisson discrete random variable.\n\n    As an instance of the `rv_discrete`\
+      \ class, `poisson` object inherits from it\n    a collection of generic methods\
+      \ (see below for the full list),\n    and completes them with details specific\
+      \ for this particular distribution.\n    \n    Methods\n    -------\n    rvs(mu,\
+      \ loc=0, size=1, random_state=None)\n        Random variates.\n    pmf(k, mu,\
+      \ loc=0)\n        Probability mass function.\n    logpmf(k, mu, loc=0)\n   \
+      \     Log of the probability mass function.\n    cdf(k, mu, loc=0)\n       \
+      \ Cumulative distribution function.\n    logcdf(k, mu, loc=0)\n        Log of\
+      \ the cumulative distribution function.\n    sf(k, mu, loc=0)\n        Survival\
+      \ function  (also defined as ``1 - cdf``, but `sf` is sometimes more accurate).\n\
+      \    logsf(k, mu, loc=0)\n        Log of the survival function.\n    ppf(q,\
+      \ mu, loc=0)\n        Percent point function (inverse of ``cdf`` --- percentiles).\n\
+      \    isf(q, mu, loc=0)\n        Inverse survival function (inverse of ``sf``).\n\
+      \    stats(mu, loc=0, moments='mv')\n        Mean('m'), variance('v'), skew('s'),\
+      \ and/or kurtosis('k').\n    entropy(mu, loc=0)\n        (Differential) entropy\
+      \ of the RV.\n    expect(func, args=(mu,), loc=0, lb=None, ub=None, conditional=False)\n\
+      \        Expected value of a function (of one argument) with respect to the\
+      \ distribution.\n    median(mu, loc=0)\n        Median of the distribution.\n\
+      \    mean(mu, loc=0)\n        Mean of the distribution.\n    var(mu, loc=0)\n\
+      \        Variance of the distribution.\n    std(mu, loc=0)\n        Standard\
+      \ deviation of the distribution.\n    interval(confidence, mu, loc=0)\n    \
+      \    Confidence interval with equal areas around the median.\n\n    Notes\n\
+      \    -----\n    The probability mass function for `poisson` is:\n\n    .. math::\n\
+      \n        f(k) = \\exp(-\\mu) \\frac{\\mu^k}{k!}\n\n    for :math:`k \\ge 0`.\n\
+      \n    `poisson` takes :math:`\\mu \\geq 0` as shape parameter.\n    When :math:`\\\
+      mu = 0`, the ``pmf`` method\n    returns ``1.0`` at quantile :math:`k = 0`.\n\
+      \n    The probability mass function above is defined in the \"standardized\"\
+      \ form.\n    To shift distribution use the ``loc`` parameter.\n    Specifically,\
+      \ ``poisson.pmf(k, mu, loc)`` is identically\n    equivalent to ``poisson.pmf(k\
+      \ - loc, mu)``.\n\n    Examples\n    --------\n    >>> import numpy as np\n\
+      \    >>> from scipy.stats import poisson\n    >>> import matplotlib.pyplot as\
+      \ plt\n    >>> fig, ax = plt.subplots(1, 1)\n    \n    Calculate the first four\
+      \ moments:\n    \n    >>> mu = 0.6\n    >>> mean, var, skew, kurt = poisson.stats(mu,\
+      \ moments='mvsk')\n    \n    Display the probability mass function (``pmf``):\n\
+      \    \n    >>> x = np.arange(poisson.ppf(0.01, mu),\n    ...               poisson.ppf(0.99,\
+      \ mu))\n    >>> ax.plot(x, poisson.pmf(x, mu), 'bo', ms=8, label='poisson pmf')\n\
+      \    >>> ax.vlines(x, 0, poisson.pmf(x, mu), colors='b', lw=5, alpha=0.5)\n\
+      \    \n    Alternatively, the distribution object can be called (as a function)\n\
+      \    to fix the shape and location. This returns a \"frozen\" RV object holding\n\
+      \    the given parameters fixed.\n    \n    Freeze the distribution and display\
+      \ the frozen ``pmf``:\n    \n    >>> rv = poisson(mu)\n    >>> ax.vlines(x,\
+      \ 0, rv.pmf(x), colors='k', linestyles='-', lw=1,\n    ...         label='frozen\
+      \ pmf')\n    >>> ax.legend(loc='best', frameon=False)\n    >>> plt.show()\n\
+      \    \n    Check accuracy of ``cdf`` and ``ppf``:\n    \n    >>> prob = poisson.cdf(x,\
+      \ mu)\n    >>> np.allclose(x, poisson.ppf(prob, mu))\n    True\n    \n    Generate\
+      \ random numbers:\n    \n    >>> r = poisson.rvs(mu, size=1000)\n\n    "
+    _ctor_param:
+      a: 0
+      b: .inf
+      badvalue: .nan
+      inc: 1
+      longname: A Poisson
+      moment_tol: 1.0e-08
+      name: poisson
+      seed: null
+      shapes: mu
+      values: null
+    _parse_arg_template: "\ndef _parse_args(self, mu,  loc=0):\n    return (mu, ),\
+      \ loc, 1\n\ndef _parse_args_rvs(self, mu,  loc=0, size=None):\n    return self._argcheck_rvs(mu,\
+      \  loc, 1, size=size)\n\ndef _parse_args_stats(self, mu,  loc=0, moments='mv'):\n\
+      \    return (mu, ), loc, 1, moments\n"
+    _random_state: *id001
+    _stats_has_moments: false
+    a: 0
+    b: .inf
+    badvalue: .nan
+    inc: 1
+    moment_tol: 1.0e-08
+    name: poisson
+    numargs: 1
+    shapes: mu
+    vecentropy: !!python/object:numpy.vectorize
+      __doc__: null
+      __name__: _entropy
+      _doc: null
+      _in_and_out_core_dims: null
+      _ufunc: {}
+      cache: false
+      excluded: !!set {}
+      otypes: null
+      pyfunc: !!python/object/apply:builtins.getattr
+      - *id004
+      - _entropy
+      signature: null
+  kwds:
+    mu: 3
+- !!python/object:scipy.stats._distn_infrastructure.rv_continuous_frozen
+  a: 0.0
+  args: !!python/tuple []
+  b: .inf
+  dist: !!python/object:scipy.stats._continuous_distns.expon_gen
+    __doc__: "An exponential continuous random variable.\n\n    As an instance of\
+      \ the `rv_continuous` class, `expon` object inherits from it\n    a collection\
+      \ of generic methods (see below for the full list),\n    and completes them\
+      \ with details specific for this particular distribution.\n    \n    Methods\n\
+      \    -------\n    rvs(loc=0, scale=1, size=1, random_state=None)\n        Random\
+      \ variates.\n    pdf(x, loc=0, scale=1)\n        Probability density function.\n\
+      \    logpdf(x, loc=0, scale=1)\n        Log of the probability density function.\n\
+      \    cdf(x, loc=0, scale=1)\n        Cumulative distribution function.\n   \
+      \ logcdf(x, loc=0, scale=1)\n        Log of the cumulative distribution function.\n\
+      \    sf(x, loc=0, scale=1)\n        Survival function  (also defined as ``1\
+      \ - cdf``, but `sf` is sometimes more accurate).\n    logsf(x, loc=0, scale=1)\n\
+      \        Log of the survival function.\n    ppf(q, loc=0, scale=1)\n       \
+      \ Percent point function (inverse of ``cdf`` --- percentiles).\n    isf(q, loc=0,\
+      \ scale=1)\n        Inverse survival function (inverse of ``sf``).\n    moment(order,\
+      \ loc=0, scale=1)\n        Non-central moment of the specified order.\n    stats(loc=0,\
+      \ scale=1, moments='mv')\n        Mean('m'), variance('v'), skew('s'), and/or\
+      \ kurtosis('k').\n    entropy(loc=0, scale=1)\n        (Differential) entropy\
+      \ of the RV.\n    fit(data)\n        Parameter estimates for generic data.\n\
+      \        See `scipy.stats.rv_continuous.fit <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.fit.html#scipy.stats.rv_continuous.fit>`__\
+      \ for detailed documentation of the\n        keyword arguments.\n    expect(func,\
+      \ args=(), loc=0, scale=1, lb=None, ub=None, conditional=False, **kwds)\n  \
+      \      Expected value of a function (of one argument) with respect to the distribution.\n\
+      \    median(loc=0, scale=1)\n        Median of the distribution.\n    mean(loc=0,\
+      \ scale=1)\n        Mean of the distribution.\n    var(loc=0, scale=1)\n   \
+      \     Variance of the distribution.\n    std(loc=0, scale=1)\n        Standard\
+      \ deviation of the distribution.\n    interval(confidence, loc=0, scale=1)\n\
+      \        Confidence interval with equal areas around the median.\n\n    Notes\n\
+      \    -----\n    The probability density function for `expon` is:\n\n    .. math::\n\
+      \n        f(x) = \\exp(-x)\n\n    for :math:`x \\ge 0`.\n\n    The probability\
+      \ density above is defined in the \"standardized\" form. To shift\n    and/or\
+      \ scale the distribution use the ``loc`` and ``scale`` parameters.\n    Specifically,\
+      \ ``expon.pdf(x, loc, scale)`` is identically\n    equivalent to ``expon.pdf(y)\
+      \ / scale`` with\n    ``y = (x - loc) / scale``. Note that shifting the location\
+      \ of a distribution\n    does not make it a \"noncentral\" distribution; noncentral\
+      \ generalizations of\n    some distributions are available in separate classes.\n\
+      \n    A common parameterization for `expon` is in terms of the rate parameter\n\
+      \    ``lambda``, such that ``pdf = lambda * exp(-lambda * x)``. This\n    parameterization\
+      \ corresponds to using ``scale = 1 / lambda``.\n\n    The exponential distribution\
+      \ is a special case of the gamma\n    distributions, with gamma shape parameter\
+      \ ``a = 1``.\n\n    Examples\n    --------\n    >>> import numpy as np\n   \
+      \ >>> from scipy.stats import expon\n    >>> import matplotlib.pyplot as plt\n\
+      \    >>> fig, ax = plt.subplots(1, 1)\n    \n    Calculate the first four moments:\n\
+      \    \n    \n    >>> mean, var, skew, kurt = expon.stats(moments='mvsk')\n \
+      \   \n    Display the probability density function (``pdf``):\n    \n    >>>\
+      \ x = np.linspace(expon.ppf(0.01),\n    ...                 expon.ppf(0.99),\
+      \ 100)\n    >>> ax.plot(x, expon.pdf(x),\n    ...        'r-', lw=5, alpha=0.6,\
+      \ label='expon pdf')\n    \n    Alternatively, the distribution object can be\
+      \ called (as a function)\n    to fix the shape, location and scale parameters.\
+      \ This returns a \"frozen\"\n    RV object holding the given parameters fixed.\n\
+      \    \n    Freeze the distribution and display the frozen ``pdf``:\n    \n \
+      \   >>> rv = expon()\n    >>> ax.plot(x, rv.pdf(x), 'k-', lw=2, label='frozen\
+      \ pdf')\n    \n    Check accuracy of ``cdf`` and ``ppf``:\n    \n    >>> vals\
+      \ = expon.ppf([0.001, 0.5, 0.999])\n    >>> np.allclose([0.001, 0.5, 0.999],\
+      \ expon.cdf(vals))\n    True\n    \n    Generate random numbers:\n    \n   \
+      \ >>> r = expon.rvs(size=1000)\n    \n    And compare the histogram:\n    \n\
+      \    >>> ax.hist(r, density=True, bins='auto', histtype='stepfilled', alpha=0.2)\n\
+      \    >>> ax.set_xlim([x[0], x[-1]])\n    >>> ax.legend(loc='best', frameon=False)\n\
+      \    >>> plt.show()\n    \n\n    "
+    _ctor_param:
+      a: 0.0
+      b: .inf
+      badvalue: .nan
+      longname: null
+      momtype: 1
+      name: expon
+      seed: null
+      shapes: null
+      xtol: 1.0e-14
+    _parse_arg_template: "\ndef _parse_args(self,  loc=0, scale=1):\n    return (),\
+      \ loc, scale\n\ndef _parse_args_rvs(self,  loc=0, scale=1, size=None):\n   \
+      \ return self._argcheck_rvs( loc, scale, size=size)\n\ndef _parse_args_stats(self,\
+      \  loc=0, scale=1, moments='mv'):\n    return (), loc, scale, moments\n"
+    _random_state: *id001
+    _stats_has_moments: false
+    a: 0.0
+    b: .inf
+    badvalue: .nan
+    moment_type: 1
+    name: expon
+    numargs: 0
+    shapes: null
+    xtol: 1.0e-14
+  kwds:
+    scale: 1
+- !!python/object:scipy.stats._distn_infrastructure.rv_continuous_frozen
+  a: 0.0
+  args: !!python/tuple []
+  b: .inf
+  dist: !!python/object:scipy.stats._continuous_distns.gamma_gen
+    __doc__: "A gamma continuous random variable.\n\n    As an instance of the `rv_continuous`\
+      \ class, `gamma` object inherits from it\n    a collection of generic methods\
+      \ (see below for the full list),\n    and completes them with details specific\
+      \ for this particular distribution.\n    \n    Methods\n    -------\n    rvs(a,\
+      \ loc=0, scale=1, size=1, random_state=None)\n        Random variates.\n   \
+      \ pdf(x, a, loc=0, scale=1)\n        Probability density function.\n    logpdf(x,\
+      \ a, loc=0, scale=1)\n        Log of the probability density function.\n   \
+      \ cdf(x, a, loc=0, scale=1)\n        Cumulative distribution function.\n   \
+      \ logcdf(x, a, loc=0, scale=1)\n        Log of the cumulative distribution function.\n\
+      \    sf(x, a, loc=0, scale=1)\n        Survival function  (also defined as ``1\
+      \ - cdf``, but `sf` is sometimes more accurate).\n    logsf(x, a, loc=0, scale=1)\n\
+      \        Log of the survival function.\n    ppf(q, a, loc=0, scale=1)\n    \
+      \    Percent point function (inverse of ``cdf`` --- percentiles).\n    isf(q,\
+      \ a, loc=0, scale=1)\n        Inverse survival function (inverse of ``sf``).\n\
+      \    moment(order, a, loc=0, scale=1)\n        Non-central moment of the specified\
+      \ order.\n    stats(a, loc=0, scale=1, moments='mv')\n        Mean('m'), variance('v'),\
+      \ skew('s'), and/or kurtosis('k').\n    entropy(a, loc=0, scale=1)\n       \
+      \ (Differential) entropy of the RV.\n    fit(data)\n        Parameter estimates\
+      \ for generic data.\n        See `scipy.stats.rv_continuous.fit <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.fit.html#scipy.stats.rv_continuous.fit>`__\
+      \ for detailed documentation of the\n        keyword arguments.\n    expect(func,\
+      \ args=(a,), loc=0, scale=1, lb=None, ub=None, conditional=False, **kwds)\n\
+      \        Expected value of a function (of one argument) with respect to the\
+      \ distribution.\n    median(a, loc=0, scale=1)\n        Median of the distribution.\n\
+      \    mean(a, loc=0, scale=1)\n        Mean of the distribution.\n    var(a,\
+      \ loc=0, scale=1)\n        Variance of the distribution.\n    std(a, loc=0,\
+      \ scale=1)\n        Standard deviation of the distribution.\n    interval(confidence,\
+      \ a, loc=0, scale=1)\n        Confidence interval with equal areas around the\
+      \ median.\n\n    See Also\n    --------\n    erlang, expon\n\n    Notes\n  \
+      \  -----\n    The probability density function for `gamma` is:\n\n    .. math::\n\
+      \n        f(x, a) = \\frac{x^{a-1} e^{-x}}{\\Gamma(a)}\n\n    for :math:`x \\\
+      ge 0`, :math:`a > 0`. Here :math:`\\Gamma(a)` refers to the\n    gamma function.\n\
+      \n    `gamma` takes ``a`` as a shape parameter for :math:`a`.\n\n    When :math:`a`\
+      \ is an integer, `gamma` reduces to the Erlang\n    distribution, and when :math:`a=1`\
+      \ to the exponential distribution.\n\n    Gamma distributions are sometimes\
+      \ parameterized with two variables,\n    with a probability density function\
+      \ of:\n\n    .. math::\n\n        f(x, \\alpha, \\beta) =\n        \\frac{\\\
+      beta^\\alpha x^{\\alpha - 1} e^{-\\beta x }}{\\Gamma(\\alpha)}\n\n    Note that\
+      \ this parameterization is equivalent to the above, with\n    ``scale = 1 /\
+      \ beta``.\n\n    The probability density above is defined in the \"standardized\"\
+      \ form. To shift\n    and/or scale the distribution use the ``loc`` and ``scale``\
+      \ parameters.\n    Specifically, ``gamma.pdf(x, a, loc, scale)`` is identically\n\
+      \    equivalent to ``gamma.pdf(y, a) / scale`` with\n    ``y = (x - loc) / scale``.\
+      \ Note that shifting the location of a distribution\n    does not make it a\
+      \ \"noncentral\" distribution; noncentral generalizations of\n    some distributions\
+      \ are available in separate classes.\n\n    Examples\n    --------\n    >>>\
+      \ import numpy as np\n    >>> from scipy.stats import gamma\n    >>> import\
+      \ matplotlib.pyplot as plt\n    >>> fig, ax = plt.subplots(1, 1)\n    \n   \
+      \ Calculate the first four moments:\n    \n    >>> a = 1.99\n    >>> mean, var,\
+      \ skew, kurt = gamma.stats(a, moments='mvsk')\n    \n    Display the probability\
+      \ density function (``pdf``):\n    \n    >>> x = np.linspace(gamma.ppf(0.01,\
+      \ a),\n    ...                 gamma.ppf(0.99, a), 100)\n    >>> ax.plot(x,\
+      \ gamma.pdf(x, a),\n    ...        'r-', lw=5, alpha=0.6, label='gamma pdf')\n\
+      \    \n    Alternatively, the distribution object can be called (as a function)\n\
+      \    to fix the shape, location and scale parameters. This returns a \"frozen\"\
+      \n    RV object holding the given parameters fixed.\n    \n    Freeze the distribution\
+      \ and display the frozen ``pdf``:\n    \n    >>> rv = gamma(a)\n    >>> ax.plot(x,\
+      \ rv.pdf(x), 'k-', lw=2, label='frozen pdf')\n    \n    Check accuracy of ``cdf``\
+      \ and ``ppf``:\n    \n    >>> vals = gamma.ppf([0.001, 0.5, 0.999], a)\n   \
+      \ >>> np.allclose([0.001, 0.5, 0.999], gamma.cdf(vals, a))\n    True\n    \n\
+      \    Generate random numbers:\n    \n    >>> r = gamma.rvs(a, size=1000)\n \
+      \   \n    And compare the histogram:\n    \n    >>> ax.hist(r, density=True,\
+      \ bins='auto', histtype='stepfilled', alpha=0.2)\n    >>> ax.set_xlim([x[0],\
+      \ x[-1]])\n    >>> ax.legend(loc='best', frameon=False)\n    >>> plt.show()\n\
+      \    \n\n    "
+    _ctor_param:
+      a: 0.0
+      b: .inf
+      badvalue: .nan
+      longname: null
+      momtype: 1
+      name: gamma
+      seed: null
+      shapes: a
+      xtol: 1.0e-14
+    _parse_arg_template: "\ndef _parse_args(self, a,  loc=0, scale=1):\n    return\
+      \ (a, ), loc, scale\n\ndef _parse_args_rvs(self, a,  loc=0, scale=1, size=None):\n\
+      \    return self._argcheck_rvs(a,  loc, scale, size=size)\n\ndef _parse_args_stats(self,\
+      \ a,  loc=0, scale=1, moments='mv'):\n    return (a, ), loc, scale, moments\n"
+    _random_state: *id001
+    _stats_has_moments: false
+    a: 0.0
+    b: .inf
+    badvalue: .nan
+    moment_type: 1
+    name: gamma
+    numargs: 1
+    shapes: a
+    xtol: 1.0e-14
+  kwds:
+    a: 2
+    scale: 1
+n_samples: 10000
