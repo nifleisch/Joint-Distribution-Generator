@@ -7,9 +7,15 @@ This repository was inspired by the [Synthetic Data Generation with GenAI](https
 
 It’s one of those problems that seems so straightforward to understand that you instinctively assume it would be easy to solve. Therefore, I was surprised to learn that no good solution for this problem existed and that they were struggling to come up with one. Still, driven by the naive belief that a good solution must exist, I spent an afternoon — which quickly turned into a late night — hacking together a new approach. Looking back, I think I got incredibly lucky, as my approach ended up working surprisingly well. So, I decided to share it online. Just in case anyone stumbles across the same problem as my friends any time soon. 
 
-## How it works
+## Why we can not use conventional Generative Models
 
-The 
+At its core, my approach is quite similar to many state of the art generative models, such as normalizing flows or diffusion models, which also aim to learn some target distribution. These models typically start by sampling from a simple distribution (e.g., the uniform distribution) and then apply a learnable function (think neural network) to transform these samples into samples that approximate the target distribution. Of course this wont happen by accident.
+
+To achieve this, the models use a measure that quantifies how close the transformed samples are to the target distribution. This measure allows them to adjust the network’s weights to produce samples that better align with the desired target distribution. Iterate this a couple of times et voila we have something like Stable Diffusion (disclaimer: very strong simplification).
+
+So if there already exists such algorithms why aren't we using them. The reason is that the target distribution is almost never explicitly defined — for example, we do not usually know that “variable 1 should follow a normal distribution with a certain mean.” Instead, the target distribution is implicitly defined by a (preferably large) dataset. As a result, the measures used by these models compare the output of the neural network with individual data examples. Therefore, we need a differentiable way to measure how close the samples produced by our neural network are to the implicitly given marginals of the target distribution.
+
+
 
 In this project, we have implemented a generator capable of producing samples from a custom joint distribution defined by marginal distributions (using `scipy.stats`) and a correlation matrix. The core idea is to use a neural network to transform random uniform noise into the desired joint distribution. This neural network processes multiple uniform noise samples together and transforms them into a sample set of the approximated target distribution.
 
