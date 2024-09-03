@@ -13,19 +13,18 @@ At its core, my approach is quite similar to many state of the art generative mo
 
 To achieve this, the models use a measure that quantifies how close the transformed samples are to the target distribution. This measure allows them to adjust the network’s weights to produce samples that better align with the desired target distribution. Iterate this a couple of times et voila we have something like Stable Diffusion (disclaimer: very strong simplification).
 
-So if there already exists such algorithms why aren't we using them. The reason is that the target distribution is almost never explicitly defined — for example, we do not usually know that “variable 1 should follow a normal distribution with a certain mean.” Instead, the target distribution is implicitly defined by a (preferably large) dataset. As a result, the measures used by these models compare the output of the neural network with individual data examples. Therefore, we need a differentiable way to measure how close the samples produced by our neural network are to the implicitly given marginals of the target distribution.
+So if there already exists such algorithms why aren't we using them. The reason is that the target distribution is almost never explicitly defined — for example, we do not usually know that “variable 1 should follow a normal distribution with a certain mean.” Instead, the target distribution is implicitly defined by a (preferably large) dataset. As a result, the measures used by these models compare the output of the neural network with individual data examples. Therefore, we need a differentiable way to measure how close the samples produced by our neural network are to the target distribution explicitly defined by the marginals and their correlation.
 
+## Coming up with a differentiable Loss
 
+The main idea of my approach is to avoid generating samples from a simple uniform distribution individually. Instead, we always consider a set of multiple samples (for example, 1,000). We then use a learnable function — a simple neural network — to transform each sample within this set, one by one. This way, we end up with a complete set of samples that should ideally follow the target distribution. To determine if this is the case, we evaluate two key properties:
 
-In this project, we have implemented a generator capable of producing samples from a custom joint distribution defined by marginal distributions (using `scipy.stats`) and a correlation matrix. The core idea is to use a neural network to transform random uniform noise into the desired joint distribution. This neural network processes multiple uniform noise samples together and transforms them into a sample set of the approximated target distribution.
+1. **Marginal Loss**: The marginal distributions of the transformed sample set should match the predefined marginal distributions. One way to verify this is by comparing the quantiles. For instance, the empirical 22% quantile of the transformed sample set should be close to the 22% quantile of the target distribution. To quantify this, we can compute the squared difference between the empirical quantiles of our sample set and the corresponding quantiles of the target distribution. However, to train the neural network, we need to compute these differences in a differentiable manner. While the standard `torch.sort` function in PyTorch is not differentiable, the `torchsort` library provides a differentiable sorting function that allows us to achieve this.
+
+2. **Correlation Loss**: We also need a way to ensure that the correlations between variables are as intended. This can be achieved by computing the empirical correlation matrix from the sample set and comparing it to the desired correlation matrix. The difference between these matrices serves as our measure of correlation loss.
+
 
 ![Design](assets/joint_distribution_generator.png)
-
-The loss function, computed based on a set of generated samples, consists of two components:
-- Correlation Loss: The generated samples are used to compute their empirical correlation matrix. The loss is then calculated by taking the absolute difference between this empirical correlation matrix and the desired correlation matrix.
-
-- Marginal Loss: For each marginal distribution, differentiable sorting (using the `torchsort` library) is employed to compute differentiable quantiles of the samples. The loss is then determined by computing the absolute difference between these empirical quantiles and the actual quantiles of the desired marginal distribution scaled.
-
 
 ## Installation
 
