@@ -1,15 +1,19 @@
 # Joint Distribution Generator
 
-This repository was inspired by the “Synthetic Data Generation with GenAI” project by PwC for the TUM Data Innovation Lab. Two of my friends who participated in this project shared their challenge with me: to simulate data x ∈ ℝᵈ from a multivariate distribution based on two requirements:
+This repository was inspired by the [Synthetic Data Generation with GenAI](https://www.mdsi.tum.de/en/di-lab/vergangene-projekte/ss24-pwc-synthetic-data-generation-with-genai/) project by PwC for the [TUM Data Innovation Lab](https://www.mdsi.tum.de/en/di-lab/tum-di-lab/). Two of my friends who participated in this project shared their challenge with me: to simulate data x ∈ ℝᵈ from a multivariate distribution based on two requirements:
 
 1. The marginal distributions of the variables must match specific forms (e.g., x₁ ~ N(4, 3²), x₂ ~ Exponential(λ = 4), ...).
 2. The correlation between these variables must align with a given correlation matrix A (Cor(x) = A).
 
 It’s one of those problems that seems so straightforward to understand that you instinctively assume it would be easy to solve. Therefore, I was surprised to learn that no good solution for this problem existed and that they were struggling to come up with one. Still, driven by the naive belief that a good solution must exist, I spent an afternoon — which quickly turned into a late night — hacking together a new approach. Looking back, I think I got incredibly lucky, as my approach ended up working surprisingly well. So, I decided to share it online. Just in case anyone stumbles across the same problem as my friends any time soon. 
 
-## Overview
+## How it works
+
+The 
 
 In this project, we have implemented a generator capable of producing samples from a custom joint distribution defined by marginal distributions (using `scipy.stats`) and a correlation matrix. The core idea is to use a neural network to transform random uniform noise into the desired joint distribution. This neural network processes multiple uniform noise samples together and transforms them into a sample set of the approximated target distribution.
+
+![Design](assets/joint_distribution_generator.png)
 
 The loss function, computed based on a set of generated samples, consists of two components:
 - Correlation Loss: The generated samples are used to compute their empirical correlation matrix. The loss is then calculated by taking the absolute difference between this empirical correlation matrix and the desired correlation matrix.
