@@ -17,7 +17,7 @@ So if there already exists such algorithms why aren't we using them. The reason 
 
 ## Coming up with a differentiable Loss
 
-The main idea of my approach is to avoid generating samples from a simple uniform distribution individually. Instead, we always consider a set of multiple samples (for example, 1,000). We then use a learnable function — a simple neural network — to transform each sample within this set, one by one. This way, we end up with a complete set of samples that should ideally follow the target distribution. To determine if this is the case, we evaluate two key properties:
+The main idea of my approach is to always generate a set of multiple samples (think 1,000) and consider them together. We then use a learnable function — a simple neural network — to transform each sample within this set, one by one. This way, we end up with a complete set of samples that should ideally follow the target distribution. To determine if this is the case, we evaluate two key properties:
 
 1. **Marginal Loss**: The marginal distributions of the transformed sample set should match the predefined marginal distributions. One way to verify this is by comparing the quantiles. For instance, the empirical 22% quantile of the transformed sample set should be close to the 22% quantile of the target distribution. To quantify this, we can compute the squared difference between the empirical quantiles of our sample set and the corresponding quantiles of the target distribution. However, to train the neural network, we need to compute these differences in a differentiable manner. While the standard `torch.sort` function in PyTorch is not differentiable, the `torchsort` library provides a differentiable sorting function that allows us to achieve this.
 
