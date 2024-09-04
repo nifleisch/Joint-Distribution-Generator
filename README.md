@@ -2,14 +2,14 @@
 
 This repository was inspired by the [Synthetic Data Generation with GenAI](https://www.mdsi.tum.de/en/di-lab/vergangene-projekte/ss24-pwc-synthetic-data-generation-with-genai/) project by PwC for the [TUM Data Innovation Lab](https://www.mdsi.tum.de/en/di-lab/tum-di-lab/). Two of my friends who participated in this project shared their challenge with me: to simulate data x ∈ ℝᵈ from a multivariate distribution based on two requirements:
 
-1. The marginal distributions of the variables must match specific forms (e.g., x₁ ~ N(4, 3²), x₂ ~ Exponential(λ = 4), ...).
+1. The marginal distributions of the variables must match specific distributions (e.g., x₁ ~ N(4, 3²), x₂ ~ Exponential(λ = 4), ...).
 2. The correlation between these variables must align with a given correlation matrix A (Cor(x) = A).
 
 It’s one of those problems that seems so straightforward to understand that you instinctively assume it would be easy to solve. Therefore, I was surprised to learn that no good solution for this problem existed and that they were struggling to come up with one. Still, driven by the naive belief that a good solution must exist, I spent an afternoon — which quickly turned into a late night — hacking together a new approach. Looking back, I think I got incredibly lucky, as my approach ended up working surprisingly well. So, I decided to share it online. Just in case anyone stumbles across the same problem as my friends any time soon. 
 
 ## Why we can not use conventional Generative Models
 
-At its core, my approach is quite similar to many state of the art generative models, such as normalizing flows or diffusion models, which also aim to learn some target distribution. These models typically start by sampling from a simple distribution (e.g., the uniform distribution) and then apply a learnable function (think neural network) to transform these samples into samples that approximate the target distribution. Of course this wont happen by accident.
+At its core, my approach is quite similar to many state of the art generative models, such as normalizing flows or diffusion models, which also aim to learn some target distribution. These models typically start by sampling from a simple distribution (e.g., the uniform distribution) and then apply a learnable function (think neural network) to transform these samples into samples of the target distribution. Of course this wont happen by accident.
 
 To achieve this, the models use a measure that quantifies how close the transformed samples are to the target distribution. This measure allows them to adjust the network’s weights to produce samples that better align with the desired target distribution. Iterate this a couple of times et voila we have something like Stable Diffusion (disclaimer: very strong simplification).
 
